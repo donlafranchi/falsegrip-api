@@ -1,0 +1,9 @@
+*.pyc
+*.db
+*.sqlite3
+env/
+nohup.out
+static/media
+data/.~lock.*
+*.csv
+*.csv#
