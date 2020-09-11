@@ -1,15 +1,16 @@
 from django.db import models
+from django.conf import settings
 
 from .mixins import *
 
 
 class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="workouts")
     datetime = models.DateTimeField()
     title = models.CharField(max_length=250)
     body_weight = models.FloatField(null=True, blank=True)
     energy_level = models.IntegerField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
-    user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="workouts")
 
 
 class Excercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
@@ -29,9 +30,9 @@ class Excercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
         ('Abs', 'Abs')
     )
 
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name="exercises")
     name = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
-    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name="exercises")
     image = models.FileField()
     gif = models.FileField(null=True, blank=True)
     video = models.CharField(max_length=250, null=True, blank=True)
