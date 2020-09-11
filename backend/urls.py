@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include, url
+
+from rest_framework_swagger.views import get_swagger_view
+
+from general.views import CustomRegisterView
+
+
+schema_view = get_swagger_view(title='False Grip API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(r'swagger/', schema_view),
+    url(r'^sign-up/', CustomRegisterView.as_view(), name='user_register'),
 ]

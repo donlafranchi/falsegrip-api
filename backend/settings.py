@@ -46,8 +46,8 @@ INSTALLED_APPS = [
     'django_filters',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'rest_auth',
-    'rest_auth.registration',
     'general'
 ]
 
@@ -79,6 +79,8 @@ TEMPLATES = [
     },
 ]
 
+SITE_ID = 1
+
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 REST_FRAMEWORK = {
@@ -107,6 +109,11 @@ REST_FRAMEWORK = {
     'SEARCH_PARAM': 'q',
     'ORDERING_PARAM': 'order_by'
 }
+
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_UNIQUE_EMAIL = False
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
