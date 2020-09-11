@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-class CustomRegisterSerializer(serializers.Serializer):
+class RegisterSerializer(serializers.Serializer):
     apple_id = serializers.CharField()
     first_name = serializers.CharField()
 
@@ -21,3 +21,17 @@ class CustomRegisterSerializer(serializers.Serializer):
         user = User(username=self.cleaned_data['username'], first_name=self.cleaned_data['first_name'])
         user.save()
         return user
+
+
+class LoginSerializer(serializers.Serializer):
+    apple_id = serializers.CharField()
+
+    def validate(self, attrs):
+        apple_id = attrs.get('apple_id')
+        user = User.objects.filter(username=apple_id).first()
+        if not user:
+            msg = 'Unable to log in with provided credentials.'
+            raise serializers.ValidationError(msg)
+
+        attrs['user'] = user
+        return attrs

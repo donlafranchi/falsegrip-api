@@ -19,7 +19,7 @@ from django.conf.urls import include, url
 
 from rest_framework_swagger.views import get_swagger_view
 
-from general.views import CustomRegisterView
+from general.views import CustomRegisterView, CustomLoginView
 
 
 schema_view = get_swagger_view(title='False Grip API')
@@ -27,5 +27,6 @@ schema_view = get_swagger_view(title='False Grip API')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'swagger/', schema_view),
-    url(r'^sign-up/', CustomRegisterView.as_view(), name='user_register'),
+    url(r'^auth/sign-up/', CustomRegisterView.as_view(), name='sign_up'),
+    url(r'^auth/sign-in/', CustomLoginView.as_view(), name='sign_in'),
 ]
