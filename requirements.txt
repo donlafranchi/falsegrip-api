@@ -1,9 +1,9 @@
 django==2.2
-pyjwt
-python-social-auth
 django-allauth
 djangorestframework
 django-cors-headers
 django-rest-swagger
 drf-extensions
 django-filter
+django-rest-auth
+pillow

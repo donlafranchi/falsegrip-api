@@ -1,6 +1,6 @@
 from django.db import models
 
-from .mixin import *
+from .mixins import *
 
 
 class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
@@ -42,6 +42,6 @@ class Excercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
 
 
 class Set(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
-    exercise = models.ForeignKey(Excercise, on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Excercise, on_delete=models.CASCADE, related_name='sets')
     num = models.IntegerField()
     reps = models.IntegerField()
