@@ -1,7 +1,9 @@
+from rest_framework import permissions, status, viewsets
 from rest_auth.registration.views import RegisterView
 from rest_auth.views import LoginView
+from rest_framework_extensions.mixins import NestedViewSetMixin
 
-from .serializers import RegisterSerializer, LoginSerializer
+from .serializers import *
 
 
 class CustomRegisterView(RegisterView):
@@ -10,3 +12,36 @@ class CustomRegisterView(RegisterView):
 
 class CustomLoginView(LoginView):
     serializer_class = LoginSerializer
+
+
+class WorkoutViewSet(viewsets.ModelViewSet):
+    serializer_class = WorkoutSerializer
+    permission_classes = (
+        permissions.IsAuthenticated,
+    )
+    queryset = Workout.objects.all()
+    search_fields = ('title',)
+
+    def get_queryset(self):
+        qs = super(CaseViewSet, self).get_queryset()
+        qs = qs.filter(user=self.request.user)
+
+        return qs
+
+
+class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    serializer_class = ExerciseSerializer
+    permission_classes = (
+        permissions.IsAuthenticated,
+    )
+    filterset_fields = ('equipment', 'primary_muscle')
+    search_fields = ('name', 'creators')
+    queryset = Exercise.objects.all()
+
+
+class SetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    serializer_class = SetSerializer
+    permission_classes = (
+        permissions.IsAuthenticated,
+    )
+    queryset = Set.objects.all()

@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
+from .models import *
+
+
 class RegisterSerializer(serializers.Serializer):
     apple_id = serializers.CharField()
     first_name = serializers.CharField()
@@ -35,3 +38,24 @@ class LoginSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
+
+
+class WorkoutSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Workout
+        exclude = ('user',)
+
+
+class ExerciseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Exercise
+        fields = '__all__'
+
+
+class SetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Set
+        fields = '__all__'

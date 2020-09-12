@@ -12,8 +12,11 @@ class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     energy_level = models.IntegerField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
 
+    class Meta:
+        ordering = ('created',)
 
-class Excercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
+
+class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     EQUIPMENT = (
         ('Rings', 'Rings'),
         ('Bar', 'Bar'),
@@ -41,8 +44,14 @@ class Excercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     primary_muscle = models.CharField(max_length=50, choices=MUSCLE)
     secondary_muscle = models.CharField(max_length=50, choices=MUSCLE, null=True, blank=True)
 
+    class Meta:
+        ordering = ('created',)
+
 
 class Set(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
-    exercise = models.ForeignKey(Excercise, on_delete=models.CASCADE, related_name='sets')
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='sets')
     num = models.IntegerField()
     reps = models.IntegerField()
+
+    class Meta:
+        ordering = ('num',)
