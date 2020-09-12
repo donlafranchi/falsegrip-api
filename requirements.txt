@@ -7,3 +7,4 @@ drf-extensions
 django-filter
 django-rest-auth
 pillow
+gunicorn

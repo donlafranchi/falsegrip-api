@@ -25,7 +25,7 @@ SECRET_KEY = '#1(5ihjrb-qrpcazgij!_ls#vv8s_%6qdo2=ddxnmage_0!i9q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['humblerings.com', 'localhost']
 
 
 # Application definition
