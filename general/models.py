@@ -15,6 +15,9 @@ class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     class Meta:
         ordering = ('created',)
 
+    def __str__(self):
+        return f'{self.user.username} - {self.datetime.strftime("%m/%d/%Y %H:%M")}'
+
 
 class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     EQUIPMENT = (
@@ -36,8 +39,8 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name="exercises")
     name = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
-    image = models.FileField()
-    gif = models.FileField(null=True, blank=True)
+    image = models.FileField(upload_to="media")
+    gif = models.FileField(upload_to="media", null=True, blank=True)
     video = models.CharField(max_length=250, null=True, blank=True)
     creators = models.TextField(null=True, blank=True)
     equipment = models.CharField(max_length=50, choices=EQUIPMENT)
@@ -48,10 +51,12 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
         ordering = ('created',)
 
 
-class Set(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
+class Set(CreatedModifiedMixin):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='sets')
-    num = models.IntegerField()
     reps = models.IntegerField()
 
     class Meta:
-        ordering = ('num',)
+        ordering = ('id',)
+
+    def __str__(self):
+        return str(self.id)

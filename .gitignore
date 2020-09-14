@@ -7,3 +7,4 @@ static/media
 data/.~lock.*
 *.csv
 *.csv#
+media/

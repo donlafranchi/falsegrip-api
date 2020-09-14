@@ -23,10 +23,13 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     search_fields = ('title',)
 
     def get_queryset(self):
-        qs = super(CaseViewSet, self).get_queryset()
+        qs = super(WorkoutViewSet, self).get_queryset()
         qs = qs.filter(user=self.request.user)
 
         return qs
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
