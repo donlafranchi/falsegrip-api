@@ -21,7 +21,6 @@ class WorkoutAdmin(admin.ModelAdmin):
     # list_filter = ('equipment', 'primary_muscle')
     # search_fields = ('suite', 'property__name',)
     # autocomplete_fields = ('property',)
-    # inlines = (SetAdmin,)
 
 
 admin.site.register(Exercise, ExerciseAdmin)
