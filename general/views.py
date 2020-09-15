@@ -21,6 +21,8 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     )
     queryset = Workout.objects.all()
     search_fields = ('title',)
+    ordering_fields = ('created', 'datetime')
+    ordering = ('-datetime', )
 
     def get_queryset(self):
         qs = super(WorkoutViewSet, self).get_queryset()
