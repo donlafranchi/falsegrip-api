@@ -41,6 +41,12 @@ class LoginSerializer(serializers.Serializer):
 
 
 class WorkoutSerializer(serializers.ModelSerializer):
+    exercises_obj = serializers.SerializerMethodField()
+
+    def get_exercises_obj(self, obj):
+        data = ExerciseSerializer(obj.exercises, many=True).data
+
+        return data
 
     class Meta:
         model = Workout

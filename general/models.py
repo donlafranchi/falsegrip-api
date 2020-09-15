@@ -48,7 +48,7 @@ class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     exercises = models.ManyToManyField(Exercise, blank=True)
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('datetime',)
 
     def __str__(self):
         return f'{self.user.username} - {self.datetime.strftime("%m/%d/%Y %H:%M")}'
