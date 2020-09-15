@@ -4,21 +4,6 @@ from django.conf import settings
 from .mixins import *
 
 
-class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="workouts")
-    datetime = models.DateTimeField()
-    title = models.CharField(max_length=250)
-    body_weight = models.FloatField(null=True, blank=True)
-    energy_level = models.IntegerField(null=True, blank=True)
-    comments = models.TextField(null=True, blank=True)
-
-    class Meta:
-        ordering = ('created',)
-
-    def __str__(self):
-        return f'{self.user.username} - {self.datetime.strftime("%m/%d/%Y %H:%M")}'
-
-
 class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     EQUIPMENT = (
         ('Rings', 'Rings'),
@@ -36,7 +21,6 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
         ('Abs', 'Abs')
     )
 
-    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name="exercises")
     name = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
     image = models.FileField(upload_to="media")
@@ -50,8 +34,28 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     class Meta:
         ordering = ('created',)
 
+    def __str__(self):
+        return self.name
+
+
+class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="workouts")
+    datetime = models.DateTimeField()
+    title = models.CharField(max_length=250)
+    body_weight = models.FloatField(null=True, blank=True)
+    energy_level = models.IntegerField(null=True, blank=True)
+    comments = models.TextField(null=True, blank=True)
+    exercises = models.ManyToManyField(Exercise, blank=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.datetime.strftime("%m/%d/%Y %H:%M")}'
+
 
 class Set(CreatedModifiedMixin):
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name="sets")
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='sets')
     reps = models.IntegerField()
 

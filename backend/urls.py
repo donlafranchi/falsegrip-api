@@ -18,18 +18,17 @@ workout_routes = router.register(
     basename='workouts'
 )
 
-exercise_routes = workout_routes.register(
+exercise_routes = router.register(
     r'exercises',
     ExerciseViewSet,
     basename='exercises',
-    parents_query_lookups=["workout"]
 )
 
-set_routes = exercise_routes.register(
+set_routes = workout_routes.register(
     r'sets',
     SetViewSet,
     basename='sets',
-    parents_query_lookups=["exercise__workout", "exercise"]
+    parents_query_lookups=["workout"]
 )
 
 schema_view = get_swagger_view(title='Humble Rings API')

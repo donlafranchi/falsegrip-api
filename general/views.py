@@ -47,4 +47,5 @@ class SetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     permission_classes = (
         permissions.IsAuthenticated,
     )
+    filterset_fields = ('exercise',)
     queryset = Set.objects.all()

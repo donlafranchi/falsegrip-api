@@ -3,17 +3,16 @@ from django.contrib import admin
 from .models import *
 
 
-class SetAdmin(admin.StackedInline):
-    model = Set
-    extra = 0
+class SetAdmin(admin.ModelAdmin):
+    list_display = ('workout', 'exercise', 'reps')
 
 
 class ExerciseAdmin(admin.ModelAdmin):
-    list_display = ('workout', 'name', 'equipment', 'primary_muscle', 'secondary_muscle')
+    list_display = ('name', 'equipment', 'primary_muscle', 'secondary_muscle')
     list_filter = ('equipment', 'primary_muscle')
     # search_fields = ('suite', 'property__name',)
     # autocomplete_fields = ('property',)
-    inlines = (SetAdmin,)
+    # inlines = (SetAdmin,)
 
 
 class WorkoutAdmin(admin.ModelAdmin):
@@ -25,3 +24,4 @@ class WorkoutAdmin(admin.ModelAdmin):
 
 admin.site.register(Exercise, ExerciseAdmin)
 admin.site.register(Workout, WorkoutAdmin)
+admin.site.register(Set, SetAdmin)
