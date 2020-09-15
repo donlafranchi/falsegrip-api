@@ -23,8 +23,8 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
 
     name = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
-    image = models.FileField(upload_to="/var/www/html/media")
-    gif = models.FileField(upload_to="media", null=True, blank=True)
+    image = models.FileField()
+    gif = models.FileField(null=True, blank=True)
     video = models.CharField(max_length=250, null=True, blank=True)
     creators = models.TextField(null=True, blank=True)
     equipment = models.CharField(max_length=50, choices=EQUIPMENT)
