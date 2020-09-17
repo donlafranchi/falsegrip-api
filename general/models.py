@@ -57,10 +57,11 @@ class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
 class Set(CreatedModifiedMixin):
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name="sets")
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='sets')
+    num = models.IntegerField()
     reps = models.IntegerField()
 
     class Meta:
-        ordering = ('id',)
+        ordering = ('num',)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.num)
