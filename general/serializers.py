@@ -44,7 +44,8 @@ class WorkoutSerializer(serializers.ModelSerializer):
     exercises_obj = serializers.SerializerMethodField()
 
     def get_exercises_obj(self, obj):
-        data = ExerciseSerializer(obj.exercises, many=True).data
+        context = { 'workout': obj.id }
+        data = ExerciseSerializer(obj.exercises, many=True, context=context).data
 
         return data
 
@@ -54,6 +55,14 @@ class WorkoutSerializer(serializers.ModelSerializer):
 
 
 class ExerciseSerializer(serializers.ModelSerializer):
+    sets = serializers.SerializerMethodField()
+
+    def get_sets(self, obj):
+        if self._context and self._context.get('workout'):
+            sets = obj.sets.filter(workout=self._context.get('workout'))
+            data = SetSerializer(sets, many=True).data
+
+            return data
 
     class Meta:
         model = Exercise
