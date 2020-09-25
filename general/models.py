@@ -4,21 +4,59 @@ from django.conf import settings
 from .mixins import *
 
 
+class Equipment(UUIDPrimaryKeyMixin):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
+
+
+class Trainer(UUIDPrimaryKeyMixin):
+    name = models.CharField(max_length=100)
+    website_url = models.CharField(max_length=250, null=True, blank=True)
+    instagram_url = models.CharField(max_length=250, null=True, blank=True)
+    youtube_url = models.CharField(max_length=250, null=True, blank=True)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
+
+
 class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
-    EQUIPMENT = (
-        ('Rings', 'Rings'),
-        ('Bar', 'Bar'),
-        ('Floor', 'Floor'),
+
+    MUSCLE_CATEGORY = (
+        ('Back/Biceps', 'Back/Biceps'),
+        ('Chest/Triceps', 'Chest/Triceps'),
+        ('Shoulders', 'Shoulders'),
+        ('Legs', 'Legs'),
+        ('Core', 'Core'),
+        ('Full Body', 'Full Body'),
+        ('Other', 'Other')
     )
 
-    MUSCLE = (
-        ('Back', 'Back'),
-        ('Chest', 'Chest'),
-        ('Shoulder', 'Shoulder'),
-        ('Bicep', 'Bicep'),
-        ('Tricep', 'Tricep'),
+    CATEGORY = (
+        ('Push', 'Push'),
+        ('Pull', 'Pull'),
         ('Legs', 'Legs'),
-        ('Abs', 'Abs')
+        ('Core', 'Core'),
+        ('Other', 'Other')
+    )
+
+    TYPE = (
+        ('Compound', 'Compound'),
+        ('Isolated', 'Isolated'),
+        ('Warmup', 'Warmup')
+    )
+
+    DIFFICULTY_LEVEL = (
+        ('Beginner', 'Beginner'),
+        ('Intermediate', 'Intermediate'),
+        ('Advanced', 'Advanced')
     )
 
     name = models.CharField(max_length=150)
@@ -26,13 +64,15 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     image = models.FileField(default='rings_default.jpg')
     gif = models.FileField(null=True, blank=True)
     video = models.CharField(max_length=250, null=True, blank=True)
-    creators = models.TextField(null=True, blank=True)
-    equipment = models.CharField(max_length=50, choices=EQUIPMENT)
-    primary_muscle = models.CharField(max_length=50, choices=MUSCLE)
-    secondary_muscle = models.CharField(max_length=50, choices=MUSCLE, null=True, blank=True)
+    trainer = models.ForeignKey(Trainer, on_delete=models.SET_NULL, null=True, blank=True)
+    equipments = models.ManyToManyField(Equipment, blank=True)
+    category = models.CharField(max_length=50, choices=CATEGORY)
+    muscle_category = models.CharField(max_length=50, choices=MUSCLE_CATEGORY, default="Other")
+    type = models.CharField(max_length=50, choices=TYPE, null=True, blank=True)
+    difficulty_level = models.CharField(max_length=50, choices=DIFFICULTY_LEVEL)
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('name',)
 
     def __str__(self):
         return self.name

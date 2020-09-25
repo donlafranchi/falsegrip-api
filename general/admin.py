@@ -8,20 +8,24 @@ class SetAdmin(admin.ModelAdmin):
 
 
 class ExerciseAdmin(admin.ModelAdmin):
-    list_display = ('name', 'equipment', 'primary_muscle', 'secondary_muscle')
-    list_filter = ('equipment', 'primary_muscle')
-    # search_fields = ('suite', 'property__name',)
-    # autocomplete_fields = ('property',)
-    # inlines = (SetAdmin,)
+    list_display = ('name', 'category', 'muscle_category', 'type', 'difficulty_level')
+    list_filter = ('category', 'muscle_category', 'type', 'difficulty_level')
 
 
 class WorkoutAdmin(admin.ModelAdmin):
     list_display = ('user', 'datetime', 'title')
-    # list_filter = ('equipment', 'primary_muscle')
-    # search_fields = ('suite', 'property__name',)
-    # autocomplete_fields = ('property',)
+
+
+class EquipmentAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+class TrainerAdmin(admin.ModelAdmin):
+    list_display = ('name',)
 
 
 admin.site.register(Exercise, ExerciseAdmin)
 admin.site.register(Workout, WorkoutAdmin)
 admin.site.register(Set, SetAdmin)
+admin.site.register(Equipment, EquipmentAdmin)
+admin.site.register(Trainer, TrainerAdmin)

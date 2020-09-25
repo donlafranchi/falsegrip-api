@@ -39,8 +39,8 @@ class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     permission_classes = (
         permissions.IsAuthenticated,
     )
-    filterset_fields = ('equipment', 'primary_muscle')
-    search_fields = ('name', 'creators')
+    filterset_fields = ('category', 'muscle_category', 'type', 'difficulty_level')
+    search_fields = ('name',)
     queryset = Exercise.objects.all()
 
 
