@@ -51,7 +51,7 @@ class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Exercise.objects.filter(active=True)
 
     @action(detail=True, methods=['GET'])
-    def detail(self, request, *args, **kwargs):
+    def history(self, request, *args, **kwargs):
         exercise = self.get_object()
         serializer = ExerciseSerializer(exercise)
         data = serializer.data
@@ -62,12 +62,13 @@ class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         workouts = request.user.workouts.filter(exercises__id__exact=exercise.id)
         if workouts:
-            sets = Set.objects.filter(workout__in=workouts, exercise=exercise).order_by('-reps')
+            sets = exercise.sets.filter(workout__in=workouts).order_by('-reps')
             max_set = sets.first()
             if max_set:
                 personal_record = max_set.reps
 
-            total_reps = sets.aggregate(Sum('reps'))['reps_sum']
+            total_reps = sets.aggregate(Sum('reps'))['reps__sum'] or 0
+            print (total_reps, '='*10)
 
             x = 12
             now = time.localtime()
@@ -80,10 +81,10 @@ class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
                 records = []
                 for wo in _workouts:
-                    reps = wo.sets.filter(exercise=exercise).aggregate(Sum('reps'))['reps_sum']
+                    reps = wo.sets.filter(exercise=exercise).aggregate(Sum('reps'))['reps__sum'] or 0
                     records.append([wo.datetime.strftime('%d %a'), reps])
 
-                history[f'{month[0]-month[1]}'] = records
+                history[f'{month[0]}-{month[1]}'] = records
 
         data['personal_record'] = personal_record
         data['total_reps'] = total_reps
