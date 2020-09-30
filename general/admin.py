@@ -8,8 +8,8 @@ class SetAdmin(admin.ModelAdmin):
 
 
 class ExerciseAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'muscle_category', 'type', 'difficulty_level')
-    list_filter = ('category', 'muscle_category', 'type', 'difficulty_level')
+    list_display = ('name', 'category', 'muscle_category', 'type', 'difficulty_level', 'active')
+    list_filter = ('category', 'active', 'muscle_category', 'type', 'difficulty_level')
 
 
 class WorkoutAdmin(admin.ModelAdmin):

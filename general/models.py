@@ -70,6 +70,8 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     muscle_category = models.CharField(max_length=50, choices=MUSCLE_CATEGORY, default="Other")
     type = models.CharField(max_length=50, choices=TYPE, null=True, blank=True)
     difficulty_level = models.CharField(max_length=50, choices=DIFFICULTY_LEVEL)
+    order = models.IntegerField(default=1)
+    active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ('name',)
