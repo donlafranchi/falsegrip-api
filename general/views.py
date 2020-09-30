@@ -68,7 +68,6 @@ class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 personal_record = max_set.reps
 
             total_reps = sets.aggregate(Sum('reps'))['reps__sum'] or 0
-            print (total_reps, '='*10)
 
             x = 12
             now = time.localtime()
