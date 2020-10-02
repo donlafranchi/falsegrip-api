@@ -69,7 +69,7 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     muscle_target = models.ManyToManyField(Muscle, blank=True)
     category = models.CharField(max_length=50, choices=CATEGORY)
     type = models.CharField(max_length=50, choices=TYPE, null=True, blank=True)
-    difficulty_level = models.CharField(max_length=50, choices=DIFFICULTY_LEVEL)
+    difficulty_level = models.PositiveIntegerField()
     active = models.BooleanField(default=True)
 
     class Meta:

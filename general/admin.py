@@ -9,7 +9,7 @@ class SetAdmin(admin.ModelAdmin):
 
 class ExerciseAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'type', 'difficulty_level', 'active')
-    list_filter = ('category', 'active', 'type', 'difficulty_level')
+    list_filter = ('category', 'active', 'type')
 
 
 class WorkoutAdmin(admin.ModelAdmin):
