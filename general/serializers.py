@@ -45,7 +45,12 @@ class WorkoutSerializer(serializers.ModelSerializer):
 
     def get_exercises_obj(self, obj):
         context = { 'workout': obj.id }
-        data = ExerciseSerializer(obj.exercises, many=True, context=context).data
+        exercises = obj.exercises
+        if obj.order:
+            ids = obj.order.split(',')
+            exercises = [obj.exercises.get(pk=pk) for pk in ids]
+
+        data = ExerciseSerializer(exercises, many=True, context=context).data
 
         return data
 
