@@ -63,6 +63,7 @@ class ExerciseSerializer(serializers.ModelSerializer):
     sets = serializers.SerializerMethodField()
     trainer_obj = serializers.SerializerMethodField()
     equipments_obj = serializers.SerializerMethodField()
+    muscle_target_obj = serializers.SerializerMethodField()
 
     def get_sets(self, obj):
         if self._context and self._context.get('workout'):
@@ -78,6 +79,11 @@ class ExerciseSerializer(serializers.ModelSerializer):
 
     def get_equipments_obj(self, obj):
         data = EquipmentSerializer(obj.equipments, many=True).data
+
+        return data
+
+    def get_muscle_target_obj(self, obj):
+        data = MuscleSerializer(obj.muscle_target, many=True).data
 
         return data
 
@@ -104,4 +110,11 @@ class TrainerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trainer
+        fields = '__all__'
+
+
+class MuscleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Muscle
         fields = '__all__'
