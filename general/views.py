@@ -81,7 +81,7 @@ class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 records = []
                 for wo in _workouts:
                     reps = wo.sets.filter(exercise=exercise).aggregate(Sum('reps'))['reps__sum'] or 0
-                    records.append([wo.datetime.strftime('%d %a'), reps])
+                    records.append({wo.datetime.strftime('%d %a'): reps})
 
                 history[f'{month[0]}-{month[1]}'] = records
 
