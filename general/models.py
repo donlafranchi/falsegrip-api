@@ -27,17 +27,17 @@ class Trainer(UUIDPrimaryKeyMixin):
         return self.name
 
 
-class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
+class Muscle(UUIDPrimaryKeyMixin):
+    name = models.CharField(max_length=100)
 
-    MUSCLE_CATEGORY = (
-        ('Back/Biceps', 'Back/Biceps'),
-        ('Chest/Triceps', 'Chest/Triceps'),
-        ('Shoulders', 'Shoulders'),
-        ('Legs', 'Legs'),
-        ('Core', 'Core'),
-        ('Full Body', 'Full Body'),
-        ('Other', 'Other')
-    )
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
+
+
+class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
 
     CATEGORY = (
         ('Push', 'Push'),
@@ -49,7 +49,7 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
 
     TYPE = (
         ('Compound', 'Compound'),
-        ('Isolated', 'Isolated'),
+        ('Corrective', 'Corrective'),
         ('Warmup', 'Warmup')
     )
 
@@ -66,11 +66,10 @@ class Exercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     instruction_video = models.CharField(max_length=250, null=True, blank=True)
     trainer = models.ForeignKey(Trainer, on_delete=models.SET_NULL, null=True, blank=True)
     equipments = models.ManyToManyField(Equipment, blank=True)
+    muscle_target = models.ManyToManyField(Muscle, blank=True)
     category = models.CharField(max_length=50, choices=CATEGORY)
-    muscle_category = models.CharField(max_length=50, choices=MUSCLE_CATEGORY, default="Other")
     type = models.CharField(max_length=50, choices=TYPE, null=True, blank=True)
     difficulty_level = models.CharField(max_length=50, choices=DIFFICULTY_LEVEL)
-    order = models.IntegerField(default=1)
     active = models.BooleanField(default=True)
 
     class Meta:
@@ -88,6 +87,7 @@ class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     energy_level = models.IntegerField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
     exercises = models.ManyToManyField(Exercise, blank=True)
+    order = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ('datetime',)

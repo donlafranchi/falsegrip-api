@@ -8,8 +8,8 @@ class SetAdmin(admin.ModelAdmin):
 
 
 class ExerciseAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'muscle_category', 'type', 'difficulty_level', 'active')
-    list_filter = ('category', 'active', 'muscle_category', 'type', 'difficulty_level')
+    list_display = ('name', 'category', 'type', 'difficulty_level', 'active')
+    list_filter = ('category', 'active', 'type', 'difficulty_level')
 
 
 class WorkoutAdmin(admin.ModelAdmin):
@@ -24,8 +24,13 @@ class TrainerAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
+class MuscleAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
 admin.site.register(Exercise, ExerciseAdmin)
 admin.site.register(Workout, WorkoutAdmin)
 admin.site.register(Set, SetAdmin)
 admin.site.register(Equipment, EquipmentAdmin)
 admin.site.register(Trainer, TrainerAdmin)
+admin.site.register(Muscle, MuscleAdmin)

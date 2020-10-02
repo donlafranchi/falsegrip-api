@@ -44,8 +44,8 @@ class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     permission_classes = (
         permissions.IsAuthenticated,
     )
-    ordering_fields = ('name', 'order')
-    ordering = ('order',)
+    # ordering_fields = ('name', 'order')
+    # ordering = ('order',)
     filterset_fields = ('category', 'muscle_category', 'type', 'difficulty_level', 'active')
     search_fields = ('name',)
     queryset = Exercise.objects.filter(active=True)
