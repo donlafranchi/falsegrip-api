@@ -46,7 +46,7 @@ class ExerciseViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     )
     # ordering_fields = ('name', 'order')
     # ordering = ('order',)
-    filterset_fields = ('category', 'muscle_category', 'type', 'difficulty_level', 'active')
+    filterset_fields = ('category', 'type', 'difficulty_level', 'active')
     search_fields = ('name',)
     queryset = Exercise.objects.filter(active=True)
 
