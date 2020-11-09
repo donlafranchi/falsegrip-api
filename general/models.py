@@ -87,6 +87,7 @@ class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     energy_level = models.IntegerField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
     exercises = models.ManyToManyField(Exercise, blank=True)
+    exercise_notes = models.TextField(null=True, blank=True)
     order = models.TextField(blank=True, null=True)
 
     class Meta:
