@@ -6,6 +6,7 @@ from rest_framework_swagger.views import get_swagger_view
 from rest_framework_extensions.routers import ExtendedDefaultRouter
 
 from general.views import *
+from accounts.views import *
 
 
 admin.site.site_title = admin.site.index_title = "Humble Rings Administration"

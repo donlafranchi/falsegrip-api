@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth',
+
+    'accounts',
     'general'
 ]
 
@@ -90,7 +92,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'general.authentication.NoCSRFSessionAuthentication',
+        'accounts.authentication.NoCSRFSessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
@@ -125,6 +127,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'accounts.AppUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

@@ -1,22 +1,12 @@
 import time
 
 from rest_framework import permissions, status, viewsets
-from rest_auth.registration.views import RegisterView
-from rest_auth.views import LoginView
 from rest_framework_extensions.mixins import NestedViewSetMixin
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.db.models import Sum
 
 from .serializers import *
-
-
-class CustomRegisterView(RegisterView):
-    serializer_class = RegisterSerializer
-
-
-class CustomLoginView(LoginView):
-    serializer_class = LoginSerializer
 
 
 class WorkoutViewSet(viewsets.ModelViewSet):
