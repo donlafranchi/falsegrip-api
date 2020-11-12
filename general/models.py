@@ -86,7 +86,7 @@ class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
     body_weight = models.FloatField(null=True, blank=True)
     energy_level = models.IntegerField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
-    exercises = models.ManyToManyField(Exercise, blank=True)
+    exercises = models.ManyToManyField(Exercise, blank=True)  # through=WorkoutExercise
     exercise_notes = models.TextField(null=True, blank=True)
     order = models.TextField(blank=True, null=True)
 
@@ -95,6 +95,15 @@ class Workout(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
 
     def __str__(self):
         return f'{self.user.username} - {self.datetime.strftime("%m/%d/%Y %H:%M")}'
+
+
+class WorkoutExercise(UUIDPrimaryKeyMixin, CreatedModifiedMixin):
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='workouts')
+    note = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{str(self.workout)} : {str(self.exercise)}'
 
 
 class Set(CreatedModifiedMixin):
