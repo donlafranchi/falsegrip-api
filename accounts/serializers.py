@@ -6,6 +6,7 @@ from .models import AppUser
 class RegisterSerializer(serializers.Serializer):
     apple_id = serializers.CharField()
     first_name = serializers.CharField()
+    last_name = serializers.CharField(required=False)
 
     def validate(self, data):
         if AppUser.objects.filter(username=data['apple_id']).exists():
@@ -16,12 +17,16 @@ class RegisterSerializer(serializers.Serializer):
         return {
             'username': self.validated_data.get('apple_id', ''),
             'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
         }
 
     def save(self, request):
         self.cleaned_data = self.get_cleaned_data()
-        user = AppUser(username=self.cleaned_data['username'], first_name=self.cleaned_data['first_name'])
+        user = AppUser(username=self.cleaned_data['username'],
+                       first_name=self.cleaned_data['first_name'],
+                       last_name=self.cleaned_data['last_name'])
         user.save()
+
         return user
 
 
