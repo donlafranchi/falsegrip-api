@@ -1,30 +1,31 @@
 from django.contrib import admin
+from import_export.admin import ImportExportMixin
 
 from .models import *
 
 
-class SetAdmin(admin.ModelAdmin):
+class SetAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('workout', 'exercise', 'reps')
 
 
-class ExerciseAdmin(admin.ModelAdmin):
+class ExerciseAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('name', 'category', 'type', 'difficulty_level', 'active')
     list_filter = ('category', 'active', 'type')
 
 
-class WorkoutAdmin(admin.ModelAdmin):
+class WorkoutAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('user', 'datetime', 'title')
 
 
-class EquipmentAdmin(admin.ModelAdmin):
+class EquipmentAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('name',)
 
 
-class TrainerAdmin(admin.ModelAdmin):
+class TrainerAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('name',)
 
 
-class MuscleAdmin(admin.ModelAdmin):
+class MuscleAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('name',)
 
 

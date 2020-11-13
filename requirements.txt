@@ -8,3 +8,4 @@ django-filter
 django-rest-auth
 pillow
 gunicorn
+django-import-export

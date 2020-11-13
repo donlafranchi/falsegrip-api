@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from import_export.admin import ImportExportMixin
 
 from .models import AppUser
 
 
-class AppUserAdmin(UserAdmin):
+class AppUserAdmin(ImportExportMixin, UserAdmin):
     # form = UserChangeForm
     # add_form = MyUserCreationForm
     # change_password_form = AdminPasswordChangeForm
