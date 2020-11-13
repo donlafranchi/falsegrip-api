@@ -27,7 +27,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30, blank=True)
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=16, blank=True)
-    birthday = models.DateTimeField(blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
     weight = models.FloatField(blank=True, null=True)
     city = models.CharField(max_length=150, blank=True, null=True)
     is_active = models.BooleanField(default=True, verbose_name='Active')

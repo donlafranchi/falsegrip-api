@@ -13,6 +13,8 @@ admin.site.site_title = admin.site.index_title = "Humble Rings Administration"
 
 router = ExtendedDefaultRouter()
 
+router.register(r'users', UserViewSet, basename='users')
+
 workout_routes = router.register(
     r'workouts',
     WorkoutViewSet,
