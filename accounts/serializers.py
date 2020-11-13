@@ -56,5 +56,5 @@ class UserSerializer(SettingsUserForSerializers,
                      serializers.ModelSerializer):
 
     class Meta:
-        read_only_fields = ('username', 'date_joined', 'last_login', 'is_superuser')
-        exclude = ('password', 'groups', 'user_permissions')
+        read_only_fields = ('id', 'username', 'date_joined', 'last_login', 'is_superuser')
+        exclude = ('password', 'groups', 'user_permissions', 'is_superuser')
