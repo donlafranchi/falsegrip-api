@@ -1,3 +1,41 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
-# Register your models here.
+from .models import AppUser
+
+
+class AppUserAdmin(UserAdmin):
+    # form = UserChangeForm
+    # add_form = MyUserCreationForm
+    # change_password_form = AdminPasswordChangeForm
+    # actions_on_bottom = True
+    ordering = ('first_name',)
+    list_filter = ('is_active',)
+    list_display = ('username', 'first_name', 'last_name', 'phone', 'is_superuser')
+    search_fields = ('username', 'last_name', 'first_name')
+    fieldsets = (
+        ('User Info', {
+            'fields': (
+                'username',
+                ('first_name', 'last_name'),
+                ('email', 'phone',),
+                ('weight', 'birthday',),
+                'city',
+            ),
+        }),
+        ('Roles', {
+            'fields': (
+                ('is_active', 'is_superuser'),
+                'groups',
+                'user_permissions'
+            ),
+        }),
+        ('Other', {
+            'fields': (
+                ('date_joined', 'last_login'),
+            )
+        })
+    )
+
+
+admin.site.register(AppUser, AppUserAdmin)
