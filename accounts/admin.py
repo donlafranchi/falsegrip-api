@@ -6,10 +6,6 @@ from .models import AppUser
 
 
 class AppUserAdmin(ImportExportMixin, UserAdmin):
-    # form = UserChangeForm
-    # add_form = MyUserCreationForm
-    # change_password_form = AdminPasswordChangeForm
-    # actions_on_bottom = True
     ordering = ('first_name',)
     list_filter = ('is_active',)
     list_display = ('username', 'first_name', 'last_name', 'phone', 'is_superuser')
